@@ -4,5 +4,5 @@ import java.util.logging.Logger;
 
 public interface PosService {
 
-    void startApplication(Logger logger);
+    void startApplication();
 }
