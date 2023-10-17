@@ -13,6 +13,8 @@ import com.systechafrica.util.InputSanitizer;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -30,6 +32,8 @@ public class PosServiceImpl implements PosService {
 
     private double totalCost=0.0;
     private double change=0.0;
+
+    private Locale locale = Locale.getDefault();
 
     public PosServiceImpl(Logger logger) {
         scanner = new Scanner(System.in);
@@ -87,12 +91,15 @@ public class PosServiceImpl implements PosService {
 
 
     }
-
+    public static String getProperty(Locale locale, String key) {
+        ResourceBundle rb = ResourceBundle.getBundle("Pos", locale);
+        return rb.getString(key);
+    }
     private void printReceipt() {
         if (order.getOrderId() != null) {
             logger.info("Display receipt: ");
             displayItems();
-            System.out.println("Total Cost: " + totalCost);
+            System.out.println(getProperty(locale,"total-cost") +" : " + totalCost);
             System.out.println("Change: " + totalCost);
             System.out.println("Thank you for shopping with us: " + totalCost);
 
