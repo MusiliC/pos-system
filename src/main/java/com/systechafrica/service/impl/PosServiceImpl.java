@@ -1,5 +1,6 @@
 package com.systechafrica.service.impl;
 
+import com.systechafrica.db.DatabaseHandler;
 import com.systechafrica.exception.InsufficientAmountException;
 import com.systechafrica.exception.OrderNotFoundException;
 import com.systechafrica.model.Order;
@@ -35,12 +36,12 @@ public class PosServiceImpl implements PosService {
 
     private Locale locale = Locale.getDefault();
 
-    public PosServiceImpl(Logger logger) {
+    public PosServiceImpl(AuthenticationService authenticationService,PaymentService paymentService,Logger logger) {
         scanner = new Scanner(System.in);
         this.logger = logger;
-        authenticationService = new AuthenticationServiceImpl();
+        this.authenticationService = authenticationService;
         order = new Order();
-        paymentService = new PaymentServiceImpl(logger);
+        this.paymentService = paymentService;
     }
 
     @Override
@@ -91,7 +92,7 @@ public class PosServiceImpl implements PosService {
 
 
     }
-    public static String getProperty(Locale locale, String key) {
+    private static String getProperty(Locale locale, String key) {
         ResourceBundle rb = ResourceBundle.getBundle("Pos", locale);
         return rb.getString(key);
     }

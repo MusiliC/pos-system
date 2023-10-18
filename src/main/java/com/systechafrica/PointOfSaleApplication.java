@@ -1,6 +1,12 @@
 package com.systechafrica;
 
+import com.systechafrica.db.DatabaseHandler;
+import com.systechafrica.db.impl.DatabaseHandlerMySqlImpl;
+import com.systechafrica.service.AuthenticationService;
+import com.systechafrica.service.PaymentService;
 import com.systechafrica.service.PosService;
+import com.systechafrica.service.impl.AuthenticationServiceImpl;
+import com.systechafrica.service.impl.PaymentServiceImpl;
 import com.systechafrica.service.impl.PosServiceImpl;
 import com.systechafrica.util.CustomFormatter;
 import java.io.IOException;
@@ -27,7 +33,10 @@ public class PointOfSaleApplication {
 
     public static void main(String[] args) throws IOException {
         initializeLogger();
-        PosService posService = new PosServiceImpl(LOGGER);
+        DatabaseHandler databaseHandler = new DatabaseHandlerMySqlImpl();
+        PaymentService paymentService = new PaymentServiceImpl(databaseHandler,LOGGER);
+        AuthenticationService authenticationService = new AuthenticationServiceImpl(databaseHandler,LOGGER);
+        PosService posService = new PosServiceImpl(authenticationService,paymentService,LOGGER);
         posService.startApplication();
 
 
