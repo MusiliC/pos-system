@@ -6,7 +6,7 @@ public class Config {
 
     public static final int LOGIN_RETRIES_LIMIT =3;
 
-    public static final String CONNECTION_URL="jdbc:mysql://localhost:3308/javase";
-    public static final String DB_USER="javase";
-    public static final String DB_PASSWORD="javase";
+    public static final String CONNECTION_URL="jdbc:mysql://localhost:3306/javase";
+    public static final String DB_USER="root";
+    public static final String DB_PASSWORD="makutano";
 }
